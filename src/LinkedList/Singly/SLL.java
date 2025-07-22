@@ -73,6 +73,29 @@ public class SLL {
         toDelete = null; // This Calls the Garbage Collection on toDelete
     }
 
+    void deleteByVal(int val){
+        if (head==null) return;
+
+        if(head.data == val){
+            deleteAtHead();
+            return;
+        }
+
+        Node temp = head;
+        while(temp.next!=null && temp.next.data!=val){
+            temp = temp.next;
+        }
+
+        if(temp.next == null){
+            System.out.println("Value to be deleted not Found");
+            return ;
+        }
+
+        Node toDelete = temp.next;
+        temp.next = temp.next.next;
+        toDelete = null; // This will call garbage collection
+    }
+
     void displayLL(){
         Node temp = head;
         while(temp!=null){
