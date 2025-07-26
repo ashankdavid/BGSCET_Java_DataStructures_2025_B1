@@ -1,0 +1,52 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Function to perform DFS traversal of the graph
+void dfsTraversalUtil(int node, const vector<vector<int>>& adjacencyList, vector<bool>& visited, vector<int>& traversalOrder) {
+    visited[node] = true;
+    traversalOrder.push_back(node);
+
+    // Traverse neighbors of the current node
+    for (int neighbor : adjacencyList[node]) {
+        if (!visited[neighbor]) {
+            dfsTraversalUtil(neighbor, adjacencyList, visited, traversalOrder);
+        }
+    }
+}
+
+vector<int> dfsTraversal(int n, const vector<vector<int>>& adjacencyList) {
+    vector<bool> visited(n, false); // Keep track of visited nodes
+    vector<int> traversalOrder; // To store the DFS traversal order
+
+    // Start DFS from vertex 0
+    dfsTraversalUtil(0, adjacencyList, visited, traversalOrder);
+
+    return traversalOrder;
+}
+
+int main() {
+    int n, m;
+    cin >> n >> m; // Number of vertices (n) and edges (m)
+
+    vector<vector<int>> adjacencyList(n);
+
+    // Read edges and construct adjacency list
+    for (int i = 0; i < m; ++i) {
+        int u, v;
+        cin >> u >> v;
+        adjacencyList[u].push_back(v);
+    }
+
+    // Perform DFS traversal starting from vertex 0
+    vector<int> result = dfsTraversal(n, adjacencyList);
+
+    // Output the traversal order
+    for (int node : result) {
+        cout << node << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
